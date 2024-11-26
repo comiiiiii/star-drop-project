@@ -1,88 +1,131 @@
-/* styles.css */
 @font-face {
-  font-family: 'LilitaOne';
-  src: url(LilitaOne-Regular.ttf);
+    font-family: 'LilitaOne';
+    src: url(LilitaOne-Regular.ttf);
+  
+  }
+  body {
+    font-family: 'LilitaOne';
+      text-align: center;
+      margin-top: 150px;
+      background-color: darkred;
+    }
 
-}
-body {
-  font-family: 'LilitaOne';
-    text-align: center;
-    margin-top: 150px;
-    background-color: darkred;
+
+    #open-inventory {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 15px 30px;
+        background-color: green; /* Green background */
+        color: rgb(255, 255, 255); /* White text color */
+        border: none;
+        border-radius: 5px;
+        font-family: 'LilitaOne'; /* Times New Roman font */
+        font-size: 18px; /* Adjust font size if needed */
+        cursor: pointer;
+      }
       
-  }
-  
-  #star-drop-container {
-    display: inline-block;
-  }
-  
-  #reward-message {
-    margin-top: 20px;
-    font-size: 32px;
-    color: rgb(240, 240, 240);
-  }  
-  #star-drop {
-    width: 350px; /* Width of the button */
-    height: 200px; /* Height of the button */
-    background-position: center; /* Centers the image inside the button */
-    border: none; /* Removes the border */
-    cursor: pointer; /* Changes the mouse cursor to a pointer when hovering over the button */
-    transition: transform 0.3s ease; /* Animation for interaction */
-    background-color: #ff990000; /* Change color on hover */
-  }
-  
-  
-  #star-drop:hover {
-    background-color: #ff990000; /* Change color on hover */
-    transform: scale(1.1); /* Slightly increase button size */
-  }
-  
-  #star-drop:active {
-    background-color: #e68a0000; /* Darker color when clicked */
-    transform: scale(1); /* No scaling when clicked */
-  }
-  @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-  }
-  
-  #star-drop:active {
-    animation: pulse 0.2s infinite; /* Pulse effect when the button is clicked */
-  }
-  @keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    50% { transform: translateX(10px); }
-    75% { transform: translateX(-10px); }
-    100% { transform: translateX(0); }
-  }
-  
-  #star-drop.shake {
-    animation: shake 0.2s ease-in-out; /* Shake effect */
-  }
-  if (holdDuration < rewardTimes[rewardType]) {
-    starDropButton.classList.add('shake'); // Apply shake animation
-    rewardMessage.textContent = 'You released too early!';
-    rewardDisplayed = true;
-    isGameActive = false;
-    setTimeout(() => {
-      starDropButton.classList.remove('shake'); // Remove shake after animation completes
-    }, 300); // Duration of shake animation
-  }
-  rewardMessage.classList.add('show');
-  @keyframes zoomIn {
-    0% { transform: scale(0); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-  }
-  
-  #reward-message {
-    animation: zoomIn 0.5s ease-out; /* Zoom-in effect */
-  }
-  #star-drop img {
-    width: 100%; /* Adjust the size of the image */
-    height: 100%;
-    object-fit: cover; /* Ensure the image covers the entire button area */
-    background-color: #e68a0000;
-  }
-  
+      #open-inventory:hover {
+        background-color: rgb(128, 168, 128); /* Darker green on hover */
+      }
+      
+
+.hidden {
+        display: none;
+      }
+
+    #star-drop-container {
+      display: inline-block;
+    }
+    
+    #reward-message {
+      margin-top: 20px;
+      font-size: 32px;
+      color: rgb(240, 240, 240);
+    }  
+    #star-drop {
+      width: 350px; /* Width of the button */
+      height: 200px; /* Height of the button */
+      background-position: center; /* Centers the image inside the button */
+      border: none; /* Removes the border */
+      cursor: pointer; /* Changes the mouse cursor to a pointer when hovering over the button */
+      transition: transform 0.3s ease; /* Animation for interaction */
+      background-color: #ff990000; /* Change color on hover */
+    }
+    
+    
+    
+    #star-drop:hover {
+      background-color: #ff990000; /* Change color on hover */
+      transform: scale(1.1); /* Slightly increase button size */
+    }
+    
+    #star-drop:active {
+      background-color: #e68a0000; /* Darker color when clicked */
+      transform: scale(1); /* No scaling when clicked */
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    
+    #star-drop:active {
+      animation: pulse 0.1s infinite; /* Pulse effect when the button is clicked */
+    }
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      50% { transform: translateX(10px); }
+      75% { transform: translateX(-10px); }
+      100% { transform: translateX(0); }
+    }
+    
+    #star-drop.shake {
+      animation: shake 0.1s ease-in-out; /* Shake effect */
+    }
+    if (holdDuration < rewardTimes[rewardType]) {
+      starDropButton.classList.add('shake'); // Apply shake animation
+      rewardMessage.textContent = 'You released too early!';
+      rewardDisplayed = true;
+      isGameActive = false;
+      setTimeout(() => {
+        starDropButton.classList.remove('shake'); // Remove shake after animation completes
+      }, 300); // Duration of shake animation
+    }
+    rewardMessage.classList.add('show');
+    @keyframes zoomIn {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    #reward-message {
+      animation: zoomIn 0.5s ease-out; /* Zoom-in effect */
+    }
+    #star-drop img {
+      width: 100%; /* Adjust the size of the image */
+      height: 100%;
+      object-fit: cover; /* Ensure the image covers the entire button area */
+      background-color: #e68a0000;
+    }
+    #back-to-menu {
+        position: fixed;
+        bottom: 20px;
+        left: 20px; /* Positioned at the bottom-right corner */
+        padding: 15px 30px;
+        background-color: #000000; /* Orange-Red background */
+        color: white; /* White text */
+        font-family: 'LilitaOne'; /* Times New Roman font */       
+        font-size: 18px;
+        border: none;
+        border-radius: 10px; /* Rounded corners */
+        cursor: pointer;
+        transition: all 0.4s ease; /* Smooth animation for hover effects */
+      }
+      
+      #back-to-menu:hover {
+        background-color: #2d0e1e; /* Darker Orange-Red on hover */
+        transform: scale(1.1); /* Slight zoom effect */
+      }
+      
+      
