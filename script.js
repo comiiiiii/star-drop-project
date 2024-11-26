@@ -1,7 +1,20 @@
-// script.js
-let isHolding = false;
-let holdStartTime = 0;
-let rewardType = ''; // This will store the reward type
+let inventory = 0; // Number of star drops in inventory
+let maxDailyDrops = 3;
+let rewardsGiven = 0; // Tracks how many rewards have been opened
+
+
+const inventoryStatus = document.getElementById('inventory-status');
+const openInventoryButton = document.getElementById('open-inventory');
+const starDropButton = document.getElementById('star-drop');
+const rewardMessage = document.getElementById('reward-message');
+const backToMenuButton = document.getElementById('back-to-menu');
+
+const checkboxes = {
+  physical: document.getElementById('physical-win'),
+  mental: document.getElementById('mental-win'),
+  spiritual: document.getElementById('spiritual-win')
+};
+
 const rewardMessages = {
   rare: "You unlocked a Rare Star Drop!",
   epic: "You unlocked an Epic Star Drop!",
@@ -11,52 +24,88 @@ const rewardMessages = {
 const rewardTimes = {
   rare: 2000, // 2 seconds
   epic: 5000, // 5 seconds
-  legendary: 11000 // 11 seconds
+  legendary: 10000 // 10 seconds
 };
 
-const starDropButton = document.getElementById('star-drop');
-const rewardMessage = document.getElementById('reward-message');
+// Initialize inventory tracking
+function updateInventoryStatus() {
+  inventoryStatus.textContent = `Star Drops in Inventory: ${inventory}`;
+  openInventoryButton.disabled = inventory === 0;
+}
 
-// Function to get a reward based on probability
-function getRewardType() {
-  const random = Math.random(); // Get a random number between 0 and 1
-  if (random < 0.55) {
-    return 'rare'; // 55% chance
-  } else if (random < 0.95) {
-    return 'epic'; // 40% chance
-  } else {
-    return 'legendary'; // 5% chance
+// Limit star drops to a maximum of 3 daily
+function limitDailyStarDrops() {
+  if (inventory >= maxDailyDrops) {
+    for (let key in checkboxes) {
+      checkboxes[key].disabled = true;
+    }
   }
 }
 
-starDropButton.addEventListener('mousedown', (e) => {
-  isHolding = true;
-  holdStartTime = Date.now();
-  rewardMessage.textContent = 'TAP AND HOLD...';
+// Collect star drops from checkboxes
+for (let key in checkboxes) {
+  checkboxes[key].addEventListener('change', (e) => {
+    if (e.target.checked && inventory < maxDailyDrops) {
+      inventory++;
+      updateInventoryStatus();
+      limitDailyStarDrops();
+    }
+  });
+}
 
-  // Get the reward type and set the required hold time
-  rewardType = getRewardType();
+// Open all star drops in inventory
+openInventoryButton.addEventListener('click', () => {
+  document.getElementById('menu-screen').classList.add('hidden');
+  document.getElementById('game-screen').classList.remove('hidden');
+  rewardsGiven = 0;
+  processNextStarDrop();
+});
+
+// Simulate star drop opening
+function processNextStarDrop() {
+  if (rewardsGiven >= inventory) {
+    rewardMessage.textContent = "All star drops opened!";
+    backToMenuButton.classList.remove('hidden');
+    inventory = 0; // Reset inventory after all star drops are opened
+    updateInventoryStatus();
+    return;
+  }
+
+  rewardMessage.textContent = "TAP AND HOLD!";
+  let rewardType = getRewardType();
   setTimeout(() => {
     rewardMessage.textContent = rewardMessages[rewardType];
+    rewardsGiven++;
+    setTimeout(processNextStarDrop, 1000);
   }, rewardTimes[rewardType]);
+}
+
+openInventoryButton.addEventListener('click', () => {
+    // Hide inventory button and show game screen
+    openInventoryButton.style.display = 'none';
+    menuScreen.classList.add('hidden');
+    gameScreen.classList.remove('hidden');
+    rewardsGiven = 0;
+    processNextStarDrop();
+  });
+
+// Return to menu
+backToMenuButton.addEventListener('click', () => {
+  document.getElementById('menu-screen').classList.remove('hidden');
+  document.getElementById('game-screen').classList.add('hidden');
+  backToMenuButton.classList.add('hidden');
 });
 
-starDropButton.addEventListener('mouseup', () => {
-  if (isHolding) {
-    const holdDuration = Date.now() - holdStartTime;
-    isHolding = false;
-    // If the user releases too early, show a message
-    if (holdDuration >= rewardTimes[rewardType]) {
-      rewardMessage.textContent = rewardMessages[rewardType];
-    } else {
-      rewardMessage.textContent = 'You released too early!';
-    }
-  }
-});
 
-starDropButton.addEventListener('mouseleave', () => {
-  if (isHolding) {
-    isHolding = false;
-    rewardMessage.textContent = 'You released too early!';
-  }
-});
+// Reward calculation
+function getRewardType() {
+  const random = Math.random();
+  if (random < 0.65) return 'rare';
+  if (random < 0.98) return 'epic';
+  return 'legendary';
+}
+
+
+// Initial setup
+updateInventoryStatus();
+limitDailyStarDrops();
