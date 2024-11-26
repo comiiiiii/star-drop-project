@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Star Drop Game</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="menu-screen">
+    <h1>Daily Wins</h1>
+    <p>Check off your achievements to earn Star Drops:</p>
+    <div>
+      <label><input type="checkbox" id="physical-win"> Physical Win</label><br>
+      <label><input type="checkbox" id="mental-win"> Mental Win</label><br>
+      <label><input type="checkbox" id="spiritual-win"> Spiritual Win</label>
+    </div>
+    <p id="inventory-status">Star Drops in Inventory: 0</p>
+  </div>
+  <button id="open-inventory">Open Inventory</button>
+
+  <div id="game-screen" class="hidden">
+    <h1>Open Your Star Drops</h1>
+    <button id="back-to-menu" class="hidden">Back to Menu</button>
+    <button id="star-drop">
+      <img src="C:\Users\lihil\Downloads\demonic drop.png" alt="Star Drop Button" />
+    </button>
+  <p id="reward-message"></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
